@@ -3,7 +3,5 @@ node_js:
   - "7"
 install:
   - npm install
+  - node app/server
   - npm test
-
-script:
-    - node app/server
