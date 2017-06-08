@@ -1,8 +1,8 @@
 /* global describe it request expect */
 var expect  = require("chai").expect;
 var request = require("request");
+var server = require('../app/server')
 var converter = require("../app/converter")
-setTimeout(function() {
 
 describe("Color Code Converter", function() {
   describe("RGB to Hex conversion", function() {
@@ -71,5 +71,3 @@ describe("Color Code Converter API", function() {
   });
 
 });
-
-}, 10000)
