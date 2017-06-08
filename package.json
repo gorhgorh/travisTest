@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter spec"
+    "server": "node app/server",
+    "test": "npm run server && mocha --reporter spec"
   },
   "keywords": [],
   "author": "",
