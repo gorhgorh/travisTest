@@ -1,7 +1,9 @@
 language: node_js
 node_js:
   - "7"
+before_script:
+  - node app/server
+
 install:
   - npm install
-  - node app/server
   - npm test
