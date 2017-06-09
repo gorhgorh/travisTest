@@ -13,10 +13,10 @@ var bot = new irc.Client(config.server, config.botName, {
 
 // Listen for any message, PM said user when he posts
 bot.addListener("message", function(from, to, text, message) {
+    console.log(text)
+    var passed = /The build passed/g.test(text)
 
-    var passed = message.test(/The build passed/g)
-	console.log(passed)
-    if (passed.lenght) {
+    if (passed) {
         console.log("build passed yay")
     } else {console.log(message)}
 //    bot.say(config.channels[0], "¿Que? " + from);

@@ -10,3 +10,5 @@ notifications:
   irc:
     channels:
       - "chat.freenode.net#cibot"
+template:
+      - "%{message}"
