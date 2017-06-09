@@ -76,10 +76,5 @@ describe("Color Code Converter API", function() {
     });
   });
 
-  describe("another simple test", function() {
-    it("should NOT fail", function() {
-      expect(2).to.equal(1);
-    });
-  });
 
 });

@@ -10,5 +10,3 @@ notifications:
   irc:
     channels:
       - "chat.freenode.net#cibot"
-    on_success: change # default: always
-    on_failure: always # default: always

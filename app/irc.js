@@ -18,7 +18,7 @@ bot.addListener("message", function(from, to, text, message) {
 	console.log(passed)
     if (passed.lenght) {
         console.log("build passed yay")
-    }
+    } else {console.log(message)}
 //    bot.say(config.channels[0], "¿Que? " + from);
 
 });
