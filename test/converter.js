@@ -70,9 +70,9 @@ describe("Color Code Converter API", function() {
     });
   });
 
-  describe("RGB to Hex conversion", function() {
-    it("should fail", function() {
-      expect(1).to.equal(2);
+  describe("simple test", function() {
+    it("should NOT fail", function() {
+      expect(2).to.equal(1);
     });
   });
 
