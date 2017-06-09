@@ -70,4 +70,10 @@ describe("Color Code Converter API", function() {
     });
   });
 
+  describe("RGB to Hex conversion", function() {
+    it("should fail", function() {
+      expect(1).to.equal(2);
+    });
+  });
+
 });
