@@ -14,7 +14,7 @@ var bot = new irc.Client(config.server, config.botName, {
 // Listen for any message, PM said user when he posts
 bot.addListener("message", function(from, to, text, message) {
 
-    var passed = message.match(/The build passed/g)
+    var passed = message.test(/The build passed/g)
 	console.log(passed)
     if (passed.lenght) {
         console.log("build passed yay")
