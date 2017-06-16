@@ -10,5 +10,8 @@ notifications:
   irc:
     channels:
       - "chat.freenode.net#cibot"
+  webhooks:
+    urls:
+      - http://a53e6225.ngrok.io/
 template:
       - "%{message}"
