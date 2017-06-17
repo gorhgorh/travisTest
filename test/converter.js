@@ -70,9 +70,9 @@ describe('Color Code Converter API', function () {
     })
   })
 
-  describe('simple test', function () {
-    it('should NOT fail', function () {
-      expect(1).to.equal(1)
+  describe('fail test', function () {
+    it('should fail or not depending on the needs', function () {
+      expect(1).to.equal(2)
     })
   })
 })
