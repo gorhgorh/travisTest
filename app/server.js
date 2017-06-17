@@ -1,23 +1,41 @@
-var express = require("express");
-var app = express();
-var converter = require("./converter");
+var hapi = require('hapi')
 
-app.get("/rgbToHex", function(req, res) {
-  var red   = parseInt(req.query.red, 10);
-  var green = parseInt(req.query.green, 10);
-  var blue  = parseInt(req.query.blue, 10);
+var converter = require('./converter')
 
-  var hex = converter.rgbToHex(red, green, blue);
+var server = new hapi.Server()
 
-  res.send(hex);
-});
+server.connection({ port: 3000 })
 
-app.get("/hexToRgb", function(req, res) {
-  var hex = req.query.hex;
+server.route({
+  method: 'POST',
+  path: '/rgbToHex',
+  handler: function (req, reply) {
+    var red = parseInt(req.payload.red, 10)
+    var green = parseInt(req.payload.green, 10)
+    var blue = parseInt(req.payload.blue, 10)
 
-  var rgb = converter.hexToRgb(hex);
+    var hex = converter.rgbToHex(red, green, blue)
+    var response = reply(hex)
 
-  res.send(JSON.stringify(rgb));
-});
+    response.header('Content-Type', 'text/plain')
+  }
+})
 
-app.listen(3000);
+server.route({
+  method: 'POST',
+  path: '/hexToRgb',
+  handler: function (req, reply) {
+    var hex = req.payload.hex
+    var rgb = converter.hexToRgb(hex)
+    var response = reply(rgb)
+
+    response.header('Content-Type', 'text/plain')
+  }
+})
+
+server.start(function (err) {
+  if (err) {
+    throw err
+  }
+  console.log('Server started on port 3000')
+})

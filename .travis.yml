@@ -12,6 +12,6 @@ notifications:
       - "chat.freenode.net#cibot"
   webhooks:
     urls:
-      - http://a53e6225.ngrok.io/sms
+      - http://1e69044d.ngrok.io/build
 template:
       - "%{message}"
