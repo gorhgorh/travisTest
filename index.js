@@ -1,7 +1,7 @@
 'use strict'
 
 var hapi = require('hapi')
-var debug = require('debug')('tb:main')
+var debug = require('debug')('travisBot:main')
 var server = new hapi.Server()
 
 // Tell our app to listen on port 3000
@@ -15,6 +15,7 @@ server.route({
     var body = JSON.parse(request.payload.payload)
 
     debug(request.headers)
+    debug(body)
     var response = reply(`build: ${body.commit_id} status is: ${body.state}`)
 
     response.header('Content-Type', 'text/plain')
