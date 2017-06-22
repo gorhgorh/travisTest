@@ -3,6 +3,7 @@ var expect = require('chai').expect
 var request = require('request')
 var server = require('../app/server')
 var converter = require('../app/converter')
+server()
 
 describe('Color Code Converter', function () {
   describe('RGB to Hex conversion', function () {

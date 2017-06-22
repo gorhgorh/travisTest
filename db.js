@@ -4,13 +4,11 @@ var db = levelup('./buildDb')
 
 var debug = require('debug')('travisBot:db')
 
-function putBuild (data, cb) {
+function putB (data, cb) {
   var key = Date.now()
-
-  if (typeof data !== 'String') {
-    debug(data)
+  debug(data)
+  if (typeof data !== 'string') {
     data = JSON.stringify(data)
-    debug(data)
   }
 
   db.put(key, data, function (err) {
@@ -25,8 +23,12 @@ function putBuild (data, cb) {
   })
 }
 
-putBuild({data: 'yo'})
+function getB (key) {
+
+}
+
+// putBuild({data: 'yo'})
 
 module.exports = {
-  putBuild
+  putB
 }

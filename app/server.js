@@ -33,9 +33,13 @@ server.route({
   }
 })
 
-server.start(function (err) {
-  if (err) {
-    throw err
-  }
-  console.log('Server started on port 3000')
-})
+function startServer () {
+  server.start(function (err) {
+    if (err) {
+      throw err
+    }
+    console.log('Server started on port 3000')
+  })
+}
+
+module.exports = startServer
