@@ -14,7 +14,7 @@ server.route({
   handler: function (request, reply) {
     var body = JSON.parse(request.payload.payload)
 
-    debug(body.state)
+    debug(request.headers)
     var response = reply(`build: ${body.commit_id} status is: ${body.state}`)
 
     response.header('Content-Type', 'text/plain')
