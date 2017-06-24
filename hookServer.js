@@ -1,7 +1,7 @@
 'use strict'
 
 var hapi = require('hapi')
-var debug = require('debug')('travisBot:main')
+var debug = require('debug')('travisBot:hookServer')
 var server = new hapi.Server()
 var db = require('./db')
 
@@ -41,6 +41,4 @@ module.exports = startServer
 if (module.parent === null) {
   debug('module is top level, starting server')
   startServer()
-  // console.log(module)
 }
-
