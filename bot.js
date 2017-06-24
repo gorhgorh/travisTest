@@ -20,60 +20,26 @@ function createBot () {
     }
     var oled = new Oled(board, five, opts)
 
-    test(oled)
+    // test(oled)
+    this.showMsg = showMessage.bind(oled)
+    this.showMsg('bot is ready...\n waiting for build')
+    // showMessage('yarrr', oled)
   })
-  function test (oled) {
-    // if it was already scrolling, stop
-    oled.stopScroll()
+  function showMessage (msg, oled) {
+    this.stopScroll()
 
     // clear first just in case
-    oled.update()
+    this.update()
 
     // make it prettier
-    oled.dimDisplay(true)
-    function showMessage (msg) {
-      oled.stopScroll()
-      oled.clearDisplay()
-      oled.setCursor(1, 1)
-      oled.writeString(font, 2, msg, 1, true, 1)
-      oled.update()
-    }
-    showMessage('yarrr')
-
-    // temporal.queue([
-    //   {
-    //     delay: 0,
-    //     task: function () {
-    //       oled.clearDisplay()
-    //       // display a bitmap
-    //       pngtolcd(path.join(__dirname, '/images/cnsLogo.png'), false, function (err, bitmapbuf) {
-    //         if (err) throw err
-    //         oled.buffer = bitmapbuf
-    //         oled.update()
-    //       })
-    //     }
-    //   },
-    //   {
-    //     delay: 10000,
-    //     task: function () {
-    //       oled.startScroll('left', 0, 15)
-    //     }
-    //   },
-    //   {
-    //     delay: 1000,
-    //     task: function () {
-    //       oled.stopScroll()
-    //       oled.update()
-    //       oled.clearDisplay()
-
-    //       // display text
-    //       oled.setCursor(0, 7)
-    //       oled.writeString(font, 2, 'SCROLL!', 1, true, 1)
-    //       oled.startScroll('left', 0, 6)
-    //     }
-    //   }
-    // ])
+    this.dimDisplay(true)
+    this.stopScroll()
+    this.clearDisplay()
+    this.setCursor(1, 1)
+    this.writeString(font, 2, msg, 1, true, 1)
+    this.update()
   }
+
   return board
 }
 
@@ -82,4 +48,49 @@ module.exports = createBot
 if (module.parent === null) {
   debug('module is top level, creating bot')
   createBot()
+}
+
+function test (oled) {
+  // if it was already scrolling, stop
+  oled.stopScroll()
+
+  // clear first just in case
+  oled.update()
+
+  // make it prettier
+  oled.dimDisplay(true)
+
+  temporal.queue([
+    {
+      delay: 0,
+      task: function () {
+        oled.clearDisplay()
+        // display a bitmap
+        pngtolcd(path.join(__dirname, '/images/cnsLogo.png'), false, function (err, bitmapbuf) {
+          if (err) throw err
+          oled.buffer = bitmapbuf
+          oled.update()
+        })
+      }
+    },
+    {
+      delay: 10000,
+      task: function () {
+        oled.startScroll('left', 0, 15)
+      }
+    },
+    {
+      delay: 1000,
+      task: function () {
+        oled.stopScroll()
+        oled.update()
+        oled.clearDisplay()
+
+        // display text
+        oled.setCursor(0, 7)
+        oled.writeString(font, 2, 'SCROLL!', 1, true, 1)
+        oled.startScroll('left', 0, 6)
+      }
+    }
+  ])
 }
