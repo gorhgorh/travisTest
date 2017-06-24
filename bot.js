@@ -49,65 +49,6 @@ function test (oled) {
         oled.startScroll('left', 0, 15)
       }
     },
-    // ,
-    // {
-    //   delay: 10000,
-    //   task: function() {
-    //     oled.clearDisplay()
-    //     // draw some lines
-    //     oled.drawLine(0, 0, 127, 31, 1)
-    //     oled.drawLine(64, 16, 127, 16, 1)
-    //     oled.drawLine(0, 10, 40, 10, 1)
-    //   }
-    // },
-    // {
-    //   delay: 10000,
-    //   task: function() {
-    //     oled.clearDisplay()
-    //     // draw a rectangle
-    //     oled.fillRect(0, 0, 10, 20, 1)
-    //   }
-    // },
-    // {
-    //   delay: 10000,
-    //   task: function() {
-    //     // create concenctric rectangle outlines
-    //     oled.clearDisplay()
-
-    //     //calc how many squares we can fit on the screen
-    //     var padding = 2
-    //     var square_count = ((oled.WIDTH / 2 ) / (padding * 2) ) - 1
-
-    //     for(var i = 0; i < square_count; i ++){
-    //       var x =  ((i + 1) * padding)
-    //       var y =  ((i + 1) * padding)
-    //       var w = oled.WIDTH - (x * padding)
-    //       var h = oled.HEIGHT - (y * padding)
-    //       oled.drawRect(x, y, w, h, 1, false)
-    //     }
-    //     oled.update()
-    //   }
-    // },
-    // {
-    //   delay: 10000,
-    //   task: function() {
-    //     // create concenctric circle outlines
-    //     oled.clearDisplay()
-
-    //     var x = oled.WIDTH / 2
-    //     var y = oled.HEIGHT / 2
-    //     var radius = oled.HEIGHT - 1
-
-    //     //calc how many circles we can fit on the screen
-    //     var circle_count = radius / 3
-
-    //     for(var i = 0; i < circle_count; i++){
-    //       var r = radius - (i * 3)
-    //       oled.drawCircle(x, y, r, 1, false)
-    //     }
-    //     oled.update()
-    //   }
-    // },
     {
       delay: 1000,
       task: function () {
@@ -121,17 +62,5 @@ function test (oled) {
         oled.startScroll('left', 0, 6)
       }
     }
-  // ,
-  // {
-  //   delay: 10000,
-  //   task: function() {
-  //     oled.stopScroll()
-  //     oled.clearDisplay()
-  //     oled.update()
-  //     oled.setCursor(0, 7)
-  //     oled.writeString(font, 2, 'DIAGONAL SCROLL', 1, true, 1)
-  //     oled.startScroll('left diagonal', 0, 15)
-  //   }
-  // }
   ])
 }
