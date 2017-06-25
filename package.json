@@ -1,18 +1,20 @@
 {
-  "name": "converter",
+  "name": "travisbot",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node app/server",
     "server": "node app/server",
     "test": "mocha --reporter spec"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["nodebot", "travis"],
+  "author": "gorhgorh",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.0.2",
     "debug": "^2.6.8",
+    "fs-extra": "^3.0.1",
     "hapi": "^16.4.3",
     "irc": "^0.5.2",
     "johnny-five": "^0.11.1",

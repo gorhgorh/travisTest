@@ -73,7 +73,7 @@ describe('Color Code Converter API', function () {
 
   describe('fail test', function () {
     it('should fail or not depending on the needs', function () {
-      expect(1).to.equal(1)
+      expect(1).to.equal(2)
     })
   })
 })

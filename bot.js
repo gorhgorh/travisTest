@@ -20,25 +20,10 @@ function createBot () {
     }
     var oled = new Oled(board, five, opts)
 
-    // test(oled)
     this.showMsg = showMessage.bind(oled)
-    this.showMsg('bot is ready...\n waiting for build')
-    // showMessage('yarrr', oled)
+    init(oled)
   })
-  function showMessage (msg, oled) {
-    this.stopScroll()
 
-    // clear first just in case
-    this.update()
-
-    // make it prettier
-    this.dimDisplay(true)
-    this.stopScroll()
-    this.clearDisplay()
-    this.setCursor(1, 1)
-    this.writeString(font, 2, msg, 1, true, 1)
-    this.update()
-  }
 
   return board
 }
@@ -50,14 +35,9 @@ if (module.parent === null) {
   createBot()
 }
 
-function test (oled) {
-  // if it was already scrolling, stop
+function init (oled) {
   oled.stopScroll()
-
-  // clear first just in case
   oled.update()
-
-  // make it prettier
   oled.dimDisplay(true)
 
   temporal.queue([
@@ -74,23 +54,31 @@ function test (oled) {
       }
     },
     {
-      delay: 10000,
-      task: function () {
-        oled.startScroll('left', 0, 15)
-      }
-    },
-    {
-      delay: 1000,
+      delay: 5000,
       task: function () {
         oled.stopScroll()
         oled.update()
         oled.clearDisplay()
 
         // display text
-        oled.setCursor(0, 7)
-        oled.writeString(font, 2, 'SCROLL!', 1, true, 1)
+        oled.setCursor(0, 30)
+        oled.writeString(font, 1, 'bot is ready...', 1, false, 1)
         oled.startScroll('left', 0, 6)
       }
     }
   ])
+}
+function showMessage (msg) {
+  this.stopScroll()
+
+  // clear first just in case
+  this.update()
+
+  // make it prettier
+  this.dimDisplay(true)
+  this.stopScroll()
+  this.clearDisplay()
+  this.setCursor(1, 1)
+  this.writeString(font, 2, msg, 1, true, 1)
+  this.update()
 }
