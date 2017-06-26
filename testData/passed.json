@@ -1,0 +1,114 @@
+{
+  "id": 246669972,
+  "repository": {
+    "id": 13822700,
+    "name": "travisTest",
+    "owner_name": "gorhgorh",
+    "url": null
+  },
+  "number": "35",
+  "config": {
+    "language": "node_js",
+    "node_js": [
+      "7"
+    ],
+    "install": [
+      "npm install",
+      "npm test"
+    ],
+    "notifications": {
+      "irc": {
+        "channels": [
+          "chat.freenode.net#cibot"
+        ],
+        "template": [
+          "%{message}"
+        ]
+      },
+      "webhooks": {
+        "urls": [
+          "http://825310a4.ngrok.io/build"
+        ]
+      }
+    },
+    ".result": "configured",
+    "group": "stable",
+    "dist": "precise"
+  },
+  "status": 0,
+  "result": 0,
+  "status_message": "Passed",
+  "result_message": "Passed",
+  "started_at": "2017-06-24T23:53:41Z",
+  "finished_at": "2017-06-24T23:55:25Z",
+  "duration": 104,
+  "build_url": "https://travis-ci.org/gorhgorh/travisTest/builds/246669972",
+  "commit_id": 71607748,
+  "commit": "c880d3361bfd52c6b3d7e1b2efafb72dad46ef07",
+  "base_commit": null,
+  "head_commit": null,
+  "branch": "master",
+  "message": "linking bot and server",
+  "compare_url": "https://github.com/gorhgorh/travisTest/compare/62553944f8da...c880d3361bfd",
+  "committed_at": "2017-06-24T23:53:30Z",
+  "author_name": "gorhgorh",
+  "author_email": "gorhgorh@lesnodebots.eu",
+  "committer_name": "gorhgorh",
+  "committer_email": "gorhgorh@lesnodebots.eu",
+  "matrix": [
+    {
+      "id": 246669973,
+      "repository_id": 13822700,
+      "parent_id": 246669972,
+      "number": "35.1",
+      "state": "finished",
+      "config": {
+        "language": "node_js",
+        "node_js": "7",
+        "install": [
+          "npm install",
+          "npm test"
+        ],
+        "notifications": {
+          "irc": {
+            "channels": [
+              "chat.freenode.net#cibot"
+            ],
+            "template": [
+              "%{message}"
+            ]
+          },
+          "webhooks": {
+            "urls": [
+              "http://825310a4.ngrok.io/build"
+            ]
+          }
+        },
+        ".result": "configured",
+        "group": "stable",
+        "dist": "precise",
+        "os": "linux"
+      },
+      "status": 0,
+      "result": 0,
+      "commit": "c880d3361bfd52c6b3d7e1b2efafb72dad46ef07",
+      "branch": "master",
+      "message": "linking bot and server",
+      "compare_url": "https://github.com/gorhgorh/travisTest/compare/62553944f8da...c880d3361bfd",
+      "started_at": "2017-06-24T23:53:41Z",
+      "finished_at": "2017-06-24T23:55:25Z",
+      "committed_at": "2017-06-24T23:53:30Z",
+      "author_name": "gorhgorh",
+      "author_email": "gorhgorh@lesnodebots.eu",
+      "committer_name": "gorhgorh",
+      "committer_email": "gorhgorh@lesnodebots.eu",
+      "allow_failure": false
+    }
+  ],
+  "type": "push",
+  "state": "passed",
+  "pull_request": false,
+  "pull_request_number": null,
+  "pull_request_title": null,
+  "tag": null
+}

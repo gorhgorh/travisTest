@@ -1,2 +1,2 @@
-var server = require('./hookServer')
-server()
+var travisBot = require('./bot')
+travisBot()

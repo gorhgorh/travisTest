@@ -68,6 +68,8 @@ function init (oled) {
     }
   ])
 }
+
+// for this func "this is bound to the oled instance"
 function showMessage (msg) {
   this.stopScroll()
 

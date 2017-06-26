@@ -7,7 +7,7 @@ var server = new hapi.Server()
 var createBot = require('./bot.js')
 var trBot = createBot()
 var fs = require('fs-extra')
-console.log(trBot)
+var bParse = require('./buildParser')
 // Tell our app to listen on port 3000
 server.connection({ port: 3000 })
 
