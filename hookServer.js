@@ -24,8 +24,7 @@ server.route({
     debug(body)
     var response = reply(`build: ${body.commit_id} status is: ${body.state}`)
     if (trBot.isReady === true) {
-      console.log('yoo')
-      trBot.showMsg('build route triggered')
+      trBot.showB(request.payload.payload)
     } else {
       console.log('bot is not ready yet')
     }
