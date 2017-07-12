@@ -16,18 +16,20 @@ server.route({
   method: 'POST',
   path: '/build',
   handler: function (request, reply) {
-    var body = JSON.parse(request.payload.payload)
+    if (trBot.isReady === true) {
+      trBot.showB(bParse(request.payload.payload))
+    } else {
+      console.log('bot is not ready yet')
+    }
+
     fs.writeFile('./testData/lastBuild.json', request.payload.payload, function (err) {
       if (err) throw err
       debug('written currBuild')
     })
+
+    var body = JSON.parse(request.payload.payload)
     debug(body)
     var response = reply(`build: ${body.commit_id} status is: ${body.state}`)
-    if (trBot.isReady === true) {
-      trBot.showB(request.payload.payload)
-    } else {
-      console.log('bot is not ready yet')
-    }
     response.header('Content-Type', 'text/plain')
   }
 })

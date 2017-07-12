@@ -72,10 +72,6 @@ function init (oled) {
         oled.setCursor(0, 30)
         oled.writeString(font, 1, 'bot is ready...', 1, true, 1)
         console.log('x,y:', oled.cursor_x, '-', oled.cursor_y)
-
-        oled.writeString(font, 1, 'bot is ready...', 1, true, 1)
-        console.log('x,y:', oled.cursor_x, '-', oled.cursor_y)
-        oled.startScroll('left', 0, 6)
       }
     }
   ])
@@ -108,37 +104,40 @@ function showBuild (bObj) {
   oled.dimDisplay(true)
   oled.stopScroll()
   oled.clearDisplay()
-  temporal.queue([
-    {
-      delay: 0,
-      task: function () {
-        oled.setCursor(0, 0)
-        if (bObj.cStatus === 1) {
-          oled.writeString(font, 2, 'BUILD FAILED', 1, true, 1)
-        } else {
-          oled.writeString(font, 2, 'BUILD PASSED', 1, true, 1)
+  temporal.loop(10000, function () {
+    console.log(this.called)
+    temporal.queue([
+      {
+        delay: 0,
+        task: function () {
+          oled.setCursor(0, 0)
+          if (bObj.cStatus === 1) {
+            oled.writeString(font, 2, 'BUILD FAILED', 1, true, 1)
+          } else {
+            oled.writeString(font, 2, 'BUILD PASSED', 1, true, 1)
+          }
+          oled.startScroll('left', 0, 6)
         }
-        oled.startScroll('left', 0, 6)
-      }
-    },
-    {
-      delay: 1000,
-      task: function () {
-        oled.stopScroll()
-        oled.update()
-        oled.clearDisplay()
+      },
+      {
+        delay: 1000,
+        task: function () {
+          oled.stopScroll()
+          oled.update()
+          oled.clearDisplay()
 
-        // display text
-        oled.setCursor(0, 7)
-        oled.writeString(font, 1, 'repo: ' + bObj.repo, 1, true, 1)
-        oled.setCursor(1, oled.cursor_y + 10)
-        oled.writeString(font, 1, 'commiter: ' + bObj.commiter, 1, true, 1)
-        oled.setCursor(1, oled.cursor_y + 10)
-        oled.writeString(font, 1, 'branch: ' + bObj.cBranch, 1, true, 1)
-        // oled.startScroll('left', 0, 6)
+          // display text
+          oled.setCursor(0, 7)
+          oled.writeString(font, 1, 'repo: ' + bObj.repo, 1, true, 1)
+          oled.setCursor(1, oled.cursor_y + 10)
+          oled.writeString(font, 1, 'commiter: ' + bObj.commiter, 1, true, 1)
+          oled.setCursor(1, oled.cursor_y + 10)
+          oled.writeString(font, 1, 'branch: ' + bObj.cBranch, 1, true, 1)
+          // oled.startScroll('left', 0, 6)
+        }
       }
-    }
-  ])
+    ])
+  })
 }
 
 module.exports = createBot
