@@ -1,15 +1,27 @@
-'use strict'
-
 var hapi = require('hapi')
+var path = require('path')
 var debug = require('debug')('travisBot:hookServer')
-var server = new hapi.Server()
+
+var port = 3001
+
+const server = new hapi.Server({
+  connections: {
+    routes: {
+      files: {
+        relativeTo: path.join(__dirname, 'testData')
+      }
+    }
+  }
+})
 // var db = require('./db')
 var createBot = require('./bot.js')
 var trBot = createBot()
 var fs = require('fs-extra')
 var bParse = require('./buildParser')
+var inert = require('inert')
+server.register(inert, () => {})
 // Tell our app to listen on port 3000
-server.connection({ port: 3000 })
+server.connection({ port: port })
 
 // Create the POST route to /sms
 server.route({
@@ -31,6 +43,18 @@ server.route({
     debug(body)
     var response = reply(`build: ${body.commit_id} status is: ${body.state}`)
     response.header('Content-Type', 'text/plain')
+  }
+})
+
+server.route({
+  method: 'GET',
+  path: '/testdata/{param*}',
+  handler: {
+    directory: {
+      path: './',
+      redirectToSlash: true,
+      index: true
+    }
   }
 })
 
