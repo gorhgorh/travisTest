@@ -9,6 +9,9 @@ const server = new hapi.Server({
     routes: {
       files: {
         relativeTo: path.join(__dirname, 'testData')
+      },
+      cors: {
+        origin: ['*']
       }
     }
   }
