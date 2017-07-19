@@ -23,12 +23,37 @@ function putB (data, cb) {
   })
 }
 
-function getB (key) {
-
+function getB (key, cb) {
+  db.get(key, function (err, value) {
+    var entry = {}
+    if (err) {
+      debug(`not found ${key}`)
+      entry.status = 0
+      entry.payload = 'build not found: ' + key
+    } else {
+      debug('entry read', key, ':', value)
+      entry.status = 1
+      entry.payload = value
+    }
+    if (cb) cb(entry)
+    return entry
+  })
 }
 
-// putBuild({data: 'yo'})
+function getAllBuilds (cb) {
+  var currKeys = []
+
+  db.createKeyStream()
+    .on('data', function (data) {
+      currKeys.push(data)
+    })
+    .on('end', function (data) {
+      debug(currKeys)
+      if (cb) cb(currKeys)
+    })
+}
 
 module.exports = {
-  putB
-}
+  putB,
+  getB,
+  getAllBuilds}

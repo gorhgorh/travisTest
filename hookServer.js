@@ -1,7 +1,9 @@
 var hapi = require('hapi')
 var path = require('path')
 var debug = require('debug')('travisBot:hookServer')
-
+var fs = require('fs-extra')
+var bParse = require('./buildParser')
+var inert = require('inert')
 var port = 3001
 
 const server = new hapi.Server({
@@ -16,17 +18,18 @@ const server = new hapi.Server({
     }
   }
 })
-// var db = require('./db')
+var db = require('./db')
+var getB = db.getB
+var getAllB = db.getAllBuilds
+
 var createBot = require('./bot.js')
 var trBot = createBot()
-var fs = require('fs-extra')
-var bParse = require('./buildParser')
-var inert = require('inert')
+
 server.register(inert, () => {})
 // Tell our app to listen on port 3000
 server.connection({ port: port })
 
-// Create the POST route to /sms
+// Create the POST route for the travis hook
 server.route({
   method: 'POST',
   path: '/build',
@@ -49,6 +52,7 @@ server.route({
   }
 })
 
+// test test build json files
 server.route({
   method: 'GET',
   path: '/testdata/{param*}',
@@ -61,13 +65,50 @@ server.route({
   }
 })
 
+// route to get a build
+server.route({
+  method: 'GET',
+  path: '/getbuild/{param*}',
+  handler: function (request, reply) {
+    var p = request.params.param.replace(/(^\d+)(.+$)/i, '$1')
+    debug('build route called', p)
+    getB(p, function (build) {
+      var response
+      var message
+      if (build.status === 0) {
+        message = `{err: '${build}}`
+        debug(`build not found, ${p}`)
+        response = reply('{err: "no build found"}')
+        response.header('Content-Type', 'application/json')
+      } else {
+        debug('build', build)
+        response = reply(build.payload)
+        response.header('Content-Type', 'application/json')
+      }
+    })
+  }
+})
+
+// route to get the builds keys in an array
+server.route({
+  method: 'GET',
+  path: '/getbuilds/',
+  handler: function (request, reply) {
+    debug('builds route called')
+    getAllB(function (builds) {
+      var response = reply(JSON.stringify(builds))
+      response.header('Content-Type', 'application/json')
+    })
+  }
+})
+
 function startServer () {
   server.start(function (err) {
     if (err) {
       throw err
     }
 
-    console.log('Server started on port 3000')
+    console.log(`Server started on port: http://localhost:${port}`)
   })
 }
 
