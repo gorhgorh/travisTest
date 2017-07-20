@@ -6,19 +6,19 @@ var debug = require('debug')('travisBot:bParser')
 function buildParser (msg) {
   if (typeof (msg) !== 'string') {
     debug('msg should be a string', typeof (msg))
-    return false // msg should be a json sting
+    return {err: 'not a string'} // msg should be a json sting
   }
   // check if it is a valid json file, and parse it
   try {
     msg = JSON.parse(msg)
   } catch (error) {
     debug('invalid JSON object')
-    return false
+    return {err: 'invalid JSON object'}
   }
   // check if the message is a valid travis build json
-  if ((!msg.id && !msg.repository.id) || Array.isArray === true) {
+  if ((!msg.id && !msg.repository.id)) {
     debug('not a travis build')
-    return false
+    return {err: 'not a travis build'}
   }
   var buildInfo = {
     repo: msg.repository.name,
@@ -26,7 +26,13 @@ function buildParser (msg) {
     cId: msg.commit,
     cBranch: msg.branch,
     cMsg: msg.message,
-    cStatus: msg.status
+    cStatus: msg.status,
+    cState: msg.state,
+    id: msg.id,
+    started_at: msg.started_at,
+    finished_at: msg.finished_at,
+    build_url: msg.build_url,
+    language: msg.config.language
   }
 
   return buildInfo

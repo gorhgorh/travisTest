@@ -4,7 +4,8 @@ var failedData = fs.readFileSync('./testData/failed.json', 'utf-8')
 var passeddData = fs.readFileSync('./testData/passed.json', 'utf-8')
 var debug = require('debug')('travisbot:testRequest')
 var expect = require('chai').expect
-
+var server = require('../hookServer')
+server()
 describe('it accept builds from the travis hook', function () {
   describe('failed build', function () {
     var res

@@ -10,7 +10,13 @@ var failedExtract = {
   cId: '9321c3cd6b5df61783d79798b5c1ec833f488063',
   cBranch: 'master',
   cMsg: 'cleanup + init func + test failing to get failing test data... for tests )',
-  cStatus: 1
+  cStatus: 1,
+  state: 'errored',
+  id: 246807723,
+  started_at: '2017-06-25T15:33:49Z',
+  finished_at: '2017-06-25T15:35:38Z',
+  build_url: 'https://travis-ci.org/gorhgorh/travisTest/builds/246807723',
+  language: 'node_js'
 }
 
 describe('it should return false for incorrect travis json', function () {
@@ -22,7 +28,7 @@ describe('it should return false for incorrect travis json', function () {
   })
 
   it('test invalid JSON', function () {
-    var testBadJson = buildParser('{test: \'false\'}')
+    var testBadJson = buildParser("{test: 'false'}")
     expect(testBadJson).to.equal(false)
   })
 

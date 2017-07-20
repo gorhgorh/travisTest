@@ -41,11 +41,13 @@ server.route({
       return response.header('Content-Type', 'text/plain')
     }
     // debug(request.payload.payload)
+    var parsedBuild = bParse(request.payload.payload)
     var bData = JSON.parse(request.payload.payload)
+    console.log(parsedBuild)
     if (trBot.isReady === true) {
       trBot.showB(bParse(bData))
     } else {
-      console.log('bot is not ready yet')
+      debug('bot is not ready yet')
     }
 
     fs.writeFile('./testData/lastBuild.json', bData, function (err) {
@@ -53,8 +55,8 @@ server.route({
       debug('written currBuild')
     })
 
-    putB(bData, function () {
-      var response = reply(`build: ${bData.commit_id} status is: ${bData.state}`)
+    putB(parsedBuild, function () {
+      var response = reply(`build: ${bData.commit} status is: ${bData.cState}`)
       response.header('Content-Type', 'text/plain')
     })
   }
