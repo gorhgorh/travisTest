@@ -5,9 +5,13 @@ var db = levelup('./buildDb')
 var debug = require('debug')('travisBot:db')
 
 function putB (data, cb) {
-  var key = data.id || Date.now()
-  debug(data)
+  // var key
+  // if (data.id) key = data.id
+  // else key = Date.now()
+  var key = Date.now()
   if (typeof data !== 'string') {
+    debug(typeof (data.id))
+    key = data.id
     data = JSON.stringify(data)
   }
 

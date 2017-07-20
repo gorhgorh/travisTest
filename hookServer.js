@@ -35,7 +35,13 @@ server.route({
   method: 'POST',
   path: '/build',
   handler: function (request, reply) {
-    var bData = request.payload.payload
+    debug(request.headers['content-type'])
+    if (request.headers['content-type'] !== 'application/x-www-form-urlencoded') {
+      var response = reply(`not a valid build`)
+      return response.header('Content-Type', 'text/plain')
+    }
+    // debug(request.payload.payload)
+    var bData = JSON.parse(request.payload.payload)
     if (trBot.isReady === true) {
       trBot.showB(bParse(bData))
     } else {
@@ -46,11 +52,9 @@ server.route({
       if (err) throw err
       debug('written currBuild')
     })
-    putB()
-    var body = JSON.parse(bData)
-    debug(body)
-    putB(body, function (){
-      var response = reply(`build: ${body.commit_id} status is: ${body.state}`)
+
+    putB(bData, function () {
+      var response = reply(`build: ${bData.commit_id} status is: ${bData.state}`)
       response.header('Content-Type', 'text/plain')
     })
   }

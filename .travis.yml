@@ -11,7 +11,9 @@ notifications:
     channels:
       - "chat.freenode.net#cibot"
     template:
-          - "%{message}"
+      - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
+      - "Change view : %{compare_url}"
+      - "Build details : %{build_url}"
   webhooks:
     urls:
       - https://98e784af.ngrok.io/build
