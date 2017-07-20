@@ -11,7 +11,7 @@ var failedExtract = {
   cBranch: 'master',
   cMsg: 'cleanup + init func + test failing to get failing test data... for tests )',
   cStatus: 1,
-  state: 'errored',
+  cState: 'errored',
   id: 246807723,
   started_at: '2017-06-25T15:33:49Z',
   finished_at: '2017-06-25T15:35:38Z',
@@ -23,18 +23,18 @@ describe('it should return false for incorrect travis json', function () {
   it('test if it is a string', function () {
     var testObj = buildParser({test: false})
     var testArr = buildParser([{test: false}])
-    expect(testObj).to.equal(false)
-    expect(testArr).to.equal(false)
+    expect(testObj.err).to.equal('not a string')
+    expect(testArr.err).to.equal('not a string')
   })
 
   it('test invalid JSON', function () {
     var testBadJson = buildParser("{test: 'false'}")
-    expect(testBadJson).to.equal(false)
+    expect(testBadJson.err).to.equal('invalid JSON object')
   })
 
-  it('test missing travis specific keys', function () {
-    var testKey = buildParser('{test: "false"}')
-    expect(testKey).to.equal(false)
+  it('refuse builds missing travis specific keys', function () {
+    var testKey = buildParser('{"test": "yo"}')
+    expect(testKey.err).to.equal('not a travis build')
   })
 })
 

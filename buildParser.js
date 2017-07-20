@@ -16,7 +16,8 @@ function buildParser (msg) {
     return {err: 'invalid JSON object'}
   }
   // check if the message is a valid travis build json
-  if ((!msg.id && !msg.repository.id)) {
+  // debug(msg)
+  if (!('id' in msg) && !('repository' in msg)) {
     debug('not a travis build')
     return {err: 'not a travis build'}
   }
@@ -40,4 +41,4 @@ function buildParser (msg) {
 
 module.exports = buildParser
 
-// buildParser(testMsg)
+// buildParser('{"test": "yo"}')
