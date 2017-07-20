@@ -14,4 +14,4 @@ notifications:
           - "%{message}"
   webhooks:
     urls:
-      - https://03e8d7a4.ngrok.io/build
+      - https://98e784af.ngrok.io/build

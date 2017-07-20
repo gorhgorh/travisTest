@@ -20,6 +20,7 @@ const server = new hapi.Server({
 })
 var db = require('./db')
 var getB = db.getB
+var putB = db.putB
 var getAllB = db.getAllBuilds
 
 var createBot = require('./bot.js')
@@ -34,21 +35,24 @@ server.route({
   method: 'POST',
   path: '/build',
   handler: function (request, reply) {
+    var bData = request.payload.payload
     if (trBot.isReady === true) {
-      trBot.showB(bParse(request.payload.payload))
+      trBot.showB(bParse(bData))
     } else {
       console.log('bot is not ready yet')
     }
 
-    fs.writeFile('./testData/lastBuild.json', request.payload.payload, function (err) {
+    fs.writeFile('./testData/lastBuild.json', bData, function (err) {
       if (err) throw err
       debug('written currBuild')
     })
-
-    var body = JSON.parse(request.payload.payload)
+    putB()
+    var body = JSON.parse(bData)
     debug(body)
-    var response = reply(`build: ${body.commit_id} status is: ${body.state}`)
-    response.header('Content-Type', 'text/plain')
+    putB(body, function (){
+      var response = reply(`build: ${body.commit_id} status is: ${body.state}`)
+      response.header('Content-Type', 'text/plain')
+    })
   }
 })
 
