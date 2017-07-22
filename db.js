@@ -40,9 +40,15 @@ function getB (key, cb) {
 function getAllBuilds (cb) {
   var currKeys = []
 
-  db.createKeyStream()
+  db.createReadStream()
     .on('data', function (data) {
-      currKeys.push(data)
+      var parsedData = JSON.parse(data.value)
+      currKeys.push({
+        key: data.key,
+        repo: parsedData.repo,
+        start: parsedData.started_at,
+        lang: parsedData.language
+      })
     })
     .on('end', function (data) {
       debug(currKeys)
@@ -53,4 +59,5 @@ function getAllBuilds (cb) {
 module.exports = {
   putB,
   getB,
-  getAllBuilds}
+  getAllBuilds
+}
