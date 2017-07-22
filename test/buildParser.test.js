@@ -16,7 +16,8 @@ var failedExtract = {
   started_at: '2017-06-25T15:33:49Z',
   finished_at: '2017-06-25T15:35:38Z',
   build_url: 'https://travis-ci.org/gorhgorh/travisTest/builds/246807723',
-  language: 'node_js'
+  language: 'node_js',
+  status: 1
 }
 
 describe('it should return false for incorrect travis json', function () {
