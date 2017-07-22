@@ -10,21 +10,13 @@ function putB (data, cb) {
   // else key = Date.now()
   var key = Date.now()
   if (typeof data !== 'string') {
-    debug(typeof (data.id))
-      key = data.id
+    key = data.id
     data = JSON.stringify(data)
   }
 
   db.put(key, data, function (err) {
-    if (err) return console.log('Ooops!', err) // some kind of I/O error
-
-    db.get(key, function (err, value) {
-      if (err) return console.log('Ooops!', err) // likely the key was not found
-
-      // debug('entry saved', key, ':', value)
-      debug('entry saved', key)
-      if (cb) cb()
-    })
+    if (err) return console.log('io err!', err)
+    else if (cb) cb()
   })
 }
 
@@ -57,8 +49,6 @@ function getAllBuilds (cb) {
       if (cb) cb(currKeys)
     })
 }
-
-db.put('123', JSON.stringify({data: 'yesss'}))
 
 module.exports = {
   putB,

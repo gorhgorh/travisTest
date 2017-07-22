@@ -1,5 +1,5 @@
 var hapi = require('hapi')
-
+var debug = require('debug')('travisbot:appServer')
 var converter = require('./converter')
 
 var server = new hapi.Server()
@@ -43,3 +43,8 @@ function startServer () {
 }
 
 module.exports = startServer
+
+if (module.parent === null) {
+  debug('module is top level, starting server')
+  startServer()
+}

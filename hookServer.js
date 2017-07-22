@@ -36,28 +36,29 @@ server.route({
   path: '/build',
   handler: function (request, reply) {
     debug(request.headers['content-type'])
+    var replyObj = {}
     if (request.headers['content-type'] !== 'application/x-www-form-urlencoded') {
-      var response = reply(`not a valid build`)
-      return response.header('Content-Type', 'text/plain')
+      replyObj.err = 'not a form'
+      return reply(replyObj)
     }
     // debug(request.payload.payload)
     var parsedBuild = bParse(request.payload.payload)
-    var bData = JSON.parse(request.payload.payload)
-    console.log(parsedBuild)
     if (trBot.isReady === true) {
-      trBot.showB(bParse(bData))
+      trBot.showB(parsedBuild)
     } else {
       debug('bot is not ready yet')
     }
 
-    fs.writeFile('./testData/lastBuild.json', bData, function (err) {
+    fs.writeFile('./testData/lastBuild.json', parsedBuild, function (err) {
       if (err) throw err
       debug('written currBuild')
     })
 
     putB(parsedBuild, function () {
-      var response = reply(`build: ${bData.commit} status is: ${bData.cState}`)
-      response.header('Content-Type', 'text/plain')
+      replyObj.build = parsedBuild.id
+      replyObj.status = parsedBuild.cState
+      // debug(parsedBuild)
+      reply(replyObj)
     })
   }
 })
