@@ -47,7 +47,8 @@ function getAllBuilds (cb) {
         key: data.key,
         repo: parsedData.repo,
         start: parsedData.started_at,
-        lang: parsedData.language
+        lang: parsedData.language,
+        status: parsedData.status
       })
     })
     .on('end', function (data) {

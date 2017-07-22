@@ -33,7 +33,8 @@ function buildParser (msg) {
     started_at: msg.started_at,
     finished_at: msg.finished_at,
     build_url: msg.build_url,
-    language: msg.config.language
+    language: msg.config.language,
+    status: msg.config.status
   }
 
   return buildInfo
