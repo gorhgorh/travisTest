@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run react\"",
+    "dev": "concurrently \"npm run devServer\" \"npm run react\"",
     "react": "node startClient.js",
     "server": "nodemon hookserver",
+    "devServer": "nodemon hookserver",
     "test": "mocha --reporter spec",
     "clearDb": "rm -rf buildDb"
   },
@@ -17,7 +19,6 @@
   "author": "gorhgorh",
   "license": "ISC",
   "dependencies": {
-    "chai": "^4.0.2",
     "debug": "^2.6.8",
     "fs-extra": "^3.0.1",
     "hapi": "^16.4.3",
@@ -36,6 +37,7 @@
     "temporal": "^0.5.0"
   },
   "devDependencies": {
+    "chai": "^4.0.2",
     "babel-eslint": "^7.2.3",
     "concurrently": "^3.5.0",
     "eslint": "^3.19.0",

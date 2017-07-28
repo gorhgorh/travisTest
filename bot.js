@@ -5,6 +5,7 @@ var font = require('oled-font-5x7')
 var temporal = require('temporal')
 var path = require('path')
 var debug = require('debug')('travisBot:bot')
+var emitter = require('./emitter')
 
 // testing data
 var failedExtract = {
@@ -17,8 +18,12 @@ var failedExtract = {
 }
 
 function createBot () {
-  var board = new five.Board()
+  var board = new five.Board({
+    repl: false,
+    debug: false
+  })
   board.on('ready', function () {
+    emitter.eventBus.sendEvent('bot', {isConnected: true})
     console.log('Connected to Arduino, ready.')
 
     // I2C va USB
@@ -34,8 +39,18 @@ function createBot () {
     // this.getPos = getPos.bind(oled)
     // this.showB(failedExtract)
     init(oled)
-  })
 
+    board.on('exit', function () {
+      emitter.eventBus.sendEvent('bot', {isConnected: false})
+      oled.writeString(font, 1, 'bye', 1, true, 1)
+      this.showMsg('bye')
+      debug('exit Event')
+    })
+    board.on('close', function () {
+      debug('Board closed event')
+      emitter.eventBus.sendEvent('bot', {isConnected: false})
+    })
+  })
   return board
 }
 
@@ -133,7 +148,7 @@ function showBuild (bObj) {
           oled.writeString(font, 1, 'commiter: ' + bObj.commiter, 1, true, 1)
           oled.setCursor(1, oled.cursor_y + 10)
           oled.writeString(font, 1, 'branch: ' + bObj.cBranch, 1, true, 1)
-          // oled.startScroll('left', 0, 6)
+        // oled.startScroll('left', 0, 6)
         }
       }
     ])

@@ -5,6 +5,9 @@ var fs = require('fs-extra')
 var bParse = require('./buildParser')
 var inert = require('inert')
 var port = 3001
+var socketPort = 4001
+
+var emitter = require('./emitter')
 
 const server = new hapi.Server({
   connections: {
@@ -19,6 +22,11 @@ const server = new hapi.Server({
   }
 })
 
+var botStatus = {
+  isConnected: false,
+  fromServer: true
+}
+
 var db = require('./db')
 var getB = db.getB
 var putB = db.putB
@@ -27,20 +35,22 @@ var getAllB = db.getAllBuilds
 var createBot = require('./bot.js')
 var trBot = createBot()
 
-var io = require('socket.io')(server.listener)
-io.set('origins', '*')
-io.on('connection', function (socket) {
-  console.log('something connected', socket.id)
-  socket.emit('Oh hii!')
-  socket.on('burp', function () {
-    socket.emit('Excuse you!')
-  })
-})
-
 server.register(inert, () => {
 })
-// Tell our app to listen on port 3000
-server.connection({ port: port })
+
+server.connection({ port: port, labels: ['api'] })
+server.connection({ port: socketPort, labels: ['chat'] })
+
+var io = require('socket.io')(server.select('chat').listener)
+
+io.on('connection', function (socket) {
+  console.log('something connected', socket.id)
+  socket.emit('bot:status', botStatus)
+  emitter.eventBus.on('bot', function (data) {
+    botStatus.isConnected = data.isConnected
+    socket.emit('bot:status', botStatus)
+  })
+})
 
 // Create the POST route for the travis hook
 server.route({
