@@ -39,9 +39,9 @@ server.register(inert, () => {
 })
 
 server.connection({ port: port, labels: ['api'] })
-server.connection({ port: socketPort, labels: ['chat'] })
+server.connection({ port: socketPort, labels: ['bot'] })
 
-var io = require('socket.io')(server.select('chat').listener)
+var io = require('socket.io')(server.select('bot').listener)
 
 io.on('connection', function (socket) {
   console.log('something connected', socket.id)
@@ -71,7 +71,7 @@ server.route({
       debug('bot is not ready yet')
     }
 
-    fs.writeFile('./testData/lastBuild.json', parsedBuild, function (err) {
+    fs.writeFile('./testData/lastBuild.json', JSON.stringify(parsedBuild), function (err) {
       if (err) throw err
       debug('written currBuild')
     })

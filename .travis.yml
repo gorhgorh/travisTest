@@ -16,4 +16,4 @@ notifications:
       - "Build details : %{build_url}"
   webhooks:
     urls:
-      - https://98e784af.ngrok.io/build
+      - https://f7e11947.ngrok.io/build
