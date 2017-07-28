@@ -18,6 +18,7 @@ const server = new hapi.Server({
     }
   }
 })
+
 var db = require('./db')
 var getB = db.getB
 var putB = db.putB
@@ -26,7 +27,18 @@ var getAllB = db.getAllBuilds
 var createBot = require('./bot.js')
 var trBot = createBot()
 
-server.register(inert, () => {})
+var io = require('socket.io')(server.listener)
+io.set('origins', '*')
+io.on('connection', function (socket) {
+  console.log('something connected', socket.id)
+  socket.emit('Oh hii!')
+  socket.on('burp', function () {
+    socket.emit('Excuse you!')
+  })
+})
+
+server.register(inert, () => {
+})
 // Tell our app to listen on port 3000
 server.connection({ port: port })
 

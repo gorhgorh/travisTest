@@ -11,7 +11,8 @@
     "nodemon.json",
     ".editorconfig",
     ".eslintrc.js",
-    ".vscode/*"
+    ".vscode/*",
+    "app/**/*"
   ],
   "verbose": true,
   "execMap": {
